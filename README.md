@@ -9,7 +9,7 @@
 
 ## Описание сервисов
 
-### Bot Service
+### [Bot Service](https://github.com/Iceeze/link-tracker/tree/main/project-bot-service)
 
 Отвечает за взаимодействие с пользователями через **Telegram Bot API**:
 
@@ -19,7 +19,7 @@
 * Отправка уведомлений пользователям
 * Хранение данных о пользователях и их настройках
 
-### Scrapper Service
+### [Scrapper Service](https://github.com/Iceeze/link-tracker/tree/main/project-scrapper-service)
 
 Осуществляет мониторинг контента:
 
@@ -34,7 +34,7 @@
 * **REST API** для синхронной коммуникации
 * **Apache Kafka** для асинхронной обработки
 
-### AI Agent Service
+### [AI Agent Service](https://github.com/Iceeze/link-tracker/tree/main/project-ai-agent-service)
 
 Обрабатывает контент перед отправкой уведомлений:
 
