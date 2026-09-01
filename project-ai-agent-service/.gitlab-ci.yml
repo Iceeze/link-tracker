@@ -1,0 +1,46 @@
+image: ${GITLAB_DOCKER_PROXY}/python:3.12-slim
+
+variables:
+  P_LANG: "python" # Default value, may be overridden via GitLab CI/CD UI
+  GITLAB_DOCKER_PROXY: "gitlab.education.tbank.ru:443/backend-academy-python-2025/lecture-materials/dependency_proxy/containers"
+
+stages:
+  - pre
+  - lint_tests
+
+show_variables:
+  stage: pre
+  script:
+    - printenv | sort
+
+Run linters and tests:
+  stage: lint_tests
+  services:
+    - name: docker:29.0.1-dind
+      alias: docker
+  variables:
+    POETRY_HOME: "/opt/poetry"
+    POETRY_VIRTUALENVS_IN_PROJECT: true
+    POETRY_NO_INTERACTION: 1
+    PYTHONUNBUFFERED: 1
+    PYTHONDONTWRITEBYTECODE: 1
+    DOCKER_HOST: tcp://docker:2376
+    DOCKER_TLS_CERTDIR: "/certs"
+    DOCKER_TLS_VERIFY: 1
+    DOCKER_CERT_PATH: "$DOCKER_TLS_CERTDIR/client"
+    TESTCONTAINERS_HUB_IMAGE_NAME_PREFIX: "${GITLAB_DOCKER_PROXY}/"
+  tags:
+    - dind
+  before_script:
+    - | 
+      export PATH="$POETRY_HOME/bin:$PATH"
+      apt-get update && apt-get install -y curl docker-cli
+      curl -sSL https://install.python-poetry.org | python -
+      poetry install --no-root --with dev
+      echo "$CI_JOB_TOKEN" | docker login gitlab.education.tbank.ru:443 -u gitlab-ci-token --password-stdin
+  script:
+    - | 
+      poetry run black --check .
+      poetry run ruff check --output-format=github --target-version=py311
+      poetry run pytest tests --dead-fixtures --dup-fixtures
+    

@@ -1,0 +1,48 @@
+[tool.poetry]
+name = "backend-academy-2026-python-template"
+version = "0.1.0"
+description = ""
+package-mode = false
+authors = ["g.tarasov <g.tarasov@tbank.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+pydantic-settings = "^2.14.1"
+structlog = "^25.5.0"
+aiokafka = "^0.14.0"
+requests = "^2.34.2"
+redis = "^7.4.0"
+confluent-kafka = {extras = ["schema-registry"], version = "^2.14.0"}
+fastavro = "^1.12.2"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.8.0"
+isort = "^5.13.2"
+ruff = "^0.6.1"
+pytest = "*"
+pytest-cov = "*"
+pytest-deadfixtures = "*"
+pytest-mock = "*"
+pytest-repeat = "*"
+pytest-asyncio = "*"
+mypy = "^1.19.1"
+testcontainers = "^4.14.2"
+fakeredis = "^2.35.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.mypy]
+plugins = ['pydantic.mypy']
+allow_redefinition = true
+ignore_missing_imports = true
+no_implicit_optional = true
+strict_equality = true
+warn_unused_ignores = true
+exclude = "^(.*/)?test_[\\w]*\\.py$|conftest\\.py|tests"
