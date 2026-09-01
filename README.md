@@ -47,3 +47,8 @@
 * Группировка связанных обновлений
 
 Работает как промежуточное звено между Scrapper и Bot
+
+## Архитектура системы
+
+<img width="981" height="904" alt="image" src="https://github.com/user-attachments/assets/8339799d-cff0-4a92-b32f-f9d4743fea27" />
+
